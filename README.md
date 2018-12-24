@@ -5,6 +5,13 @@ code was changed to store data in Mongodb. sample of row data scrapped. you can 
 Programming languages and some Database technologies were check for inside the job postings and if they existed then 1 else 0. 
 Just a simple way to check what the job is asking for.
 
+Salaries also had to be modified since they were given as hourly, daily, monthly or yearly. Two new columns Min_salary and Max salary
+were created to get numerical yearly salary data from orginal. 
+
+Scarpping code was modified to only look for jobs posted On current day and day before. Function check_date() can be removed to fetch 
+data endlessly or modify for a specific date range.
+
+
 sample row of data (a single job posting)
 ![alt text](https://github.com/anajia/Indeedscrap/blob/master/imgs/sample.jpg)
 
