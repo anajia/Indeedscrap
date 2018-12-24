@@ -1,0 +1,148 @@
+{% include 'header.html' %}
+
+	    <!-- Header-->
+        <header id="header" class="header">
+            <div class="header-menu">
+                <div class="col-sm-7">
+                    <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
+                    <div class="header-left">
+                      <h3>Sample Data from MongoDB</h3>
+                        <div class="form-inline">
+                        </div>
+                        <div class="dropdown for-notification">
+                        </div>
+                        <div class="dropdown for-message">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                </div>
+            </div>
+        </header>
+		<!-- Header -->
+
+<div class="col-lg-6">
+                    <div class="card">
+                           
+                        <div class="card-header">
+						 <strong class="card-title">Top Cities in Jobs</strong>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped">
+                              <thead>
+                                <tr>
+								   <th scope="col">#</th>
+                                  <th scope="col">City Name</th>
+                                  <th scope="col">Number of Jobs</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+							  {% for city in city_table  %}	
+								<tr>
+								  <td>{{loop.index}}</td>
+
+                                  <td>{{city._id}}</td>
+                                  <td>{{ city.count}}</td>
+
+                                </tr>
+							{% endfor %}
+
+                      
+                             
+                              </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+				
+<div class="col-lg-6">
+                    <div class="card">
+                           
+                        <div class="card-header">
+						 <strong class="card-title">Average Salaries by IT jobs</strong>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped">
+                              <thead>
+                                <tr>
+
+								   <th scope="col">#</th>
+                                  <th scope="col">Job Title</th>
+                                  <th scope="col">Min Salary</th>
+								   <th scope="col">Max Salary</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+							  {% for sal in average  %}	
+								<tr>
+
+								  <td>{{loop.index}}</td>
+
+                                  <td>{{sal._id}}</td>
+                                  <td>{{ sal.min_salary|round|int}}  </td>
+								  <td>{{ sal.max_salary|round|int }}</td>
+
+                                </tr>
+							{% endfor %}
+
+                      
+                             
+                              </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+							
+<div class="col-lg-12">
+                    <div class="card">
+                           
+                        <div class="card-header">
+						 <strong class="card-title">Skill Distribution by Job Title</strong>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped">
+                              <thead>
+                                <tr>
+
+								   <th scope="col">#</th>
+                                  <th scope="col">Job Title</th>
+                                  <th scope="col"> SQL</th>
+								   <th scope="col">HADOOP</th>
+							     <th scope="col">SAS</th>
+							      <th scope="col">JAVA</th>
+								   <th scope="col">PYTHON</th>
+								   <th scope="col">JAVASCRIPT</th>
+
+
+                                </tr>
+                              </thead>
+                              <tbody>
+							  {% for job in job_title_skill  %}	
+								<tr>
+
+								  <td>{{loop.index}}</td>
+
+                                  <td>{{job._id}}</td>
+                                  <td>{{job.sql}}</td>
+								  <td>{{job.hadoop}}</td>
+								  <td>{{job.sas}}</td>
+								  <td>{{job.java}}</td>
+							      <td>{{job.python}}</td>
+							 	  <td>{{job.javascript}}</td>
+
+
+                                </tr>
+							{% endfor %}
+
+                      
+                             
+                              </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+{% include 'footer.html' %}

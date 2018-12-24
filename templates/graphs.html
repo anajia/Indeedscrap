@@ -1,0 +1,239 @@
+{% include 'header.html' %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawStuff);
+
+      function drawStuff() {
+        var data = new google.visualization.arrayToDataTable([
+          ['City', 'Job Count'],
+	  
+	  {% for city in top_five  %}	
+          
+          ["{{city._id}}" , {{ city.count}} ],
+          
+          {% endfor %}
+	  
+          ["Other", 45 ]
+
+        ]);
+
+        var options = {
+          width: 650,
+	  height: 400,
+          legend: { position: 'none' },
+          chart: {
+            title: 'Top cities for Data Analysis Jobs',
+            subtitle: 'popularity by number of Jobs' },
+          axes: {
+            x: {
+              0: { side: 'bottom', label: 'Cities'} 
+            },
+            y: {0:{side: 'left', label: 'Number of Jobs '   } }
+          },
+          bar: { groupWidth: "70%" }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('top_x_div'));
+        // Convert the Classic options to Material options.
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      };
+
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Programming skills', 'Percentage'],
+		   
+		  {% block content1 %}
+		  
+		  ['SQL',  {{sql  }}],
+		  ['Python',  {{python  }}],
+		  ['Java',  {{java  }}],
+		  ['SAS',  {{sas  }}],
+		  ['Javascript',  {{javascript  }}],
+		  ['Hadoop',  {{hadoop  }}],
+		  ['Other',  {{other  }}]
+		  
+   
+		  
+		  {% endblock %}
+        ]);
+
+        var options = {
+		
+        title: 'Most desired Skills',
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+	  
+	  
+	  
+	  google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawVisualization);
+
+      function drawVisualization() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+          ['Skills', 'SQL', 'Hadoop', 'sas', 'Java', 'Python', 'Javascript', 'other'],
+		  
+		  {% for skill in skills_by_job %}
+          ["{{skill._id}}", {{skill.sql}}, {{skill.hadoop}}, {{skill.sas}}, {{skill.java}},  {{skill.python}}, {{skill.javascript}},0],
+		  {% endfor%}
+		  ['', 0,0,0,0,0,0,0]
+			
+        ]);
+
+        var options = {
+		  height : 400,
+          title : 'Skill Distribution',
+          vAxis: {title: 'Skills'},
+          hAxis: {title: 'Jobs'},
+          seriesType: 'bars'
+
+        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+	  
+	  
+	  // last graph
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChartz);
+
+      function drawChartz() {
+        var data = google.visualization.arrayToDataTable([
+          ['Job Title', 'Min Salary', 'Max Salary'],
+		  {% for sal in avg_salary  %}
+          ["{{sal._id}}",{{sal.min_salary|round|int}} ,{{sal.max_salary|round|int}}],
+		  {% endfor %}
+		  
+          [' ', 0,0]
+
+        ]);
+
+        var options = {
+          chart: {
+            title: 'Average Salary per Job',
+            subtitle: 'Min and Max Salaries',
+          },
+          bars: 'horizontal' // Required for Material Bar Charts.
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('bar_chart_div'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+
+
+
+
+    </script>
+
+
+
+	    <!-- Header-->
+        <header id="header" class="header">
+            <div class="header-menu">
+                <div class="col-sm-7">
+                    <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
+                    <div class="header-left">
+                      <h3>Python and Google Charts</h3>
+                        <div class="form-inline">
+                        </div>
+                        <div class="dropdown for-notification">
+                        </div>
+                        <div class="dropdown for-message">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                </div>
+            </div>
+        </header>
+		<!-- Header -->
+  <div class="content mt-3">
+            <div class="animated fadeIn">
+                <div class="row">
+				<div class="col-lg-5">
+                            <div class="card">
+                                <div class="card-body"><iframe class="chartjs-hidden-iframe" style="display: block; overflow: hidden; border: 0px none; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;" tabindex="-1"></iframe>
+                                    
+                                 <div id="bar_chart_div" style="width: 450px; height: 400px;"></div>
+
+									
+									
+									
+									</div>
+                                </div>
+                            </div>
+
+                        <div class="col-lg-7">
+                            <div class="card">
+                                <div class="card-body"><iframe class="chartjs-hidden-iframe" style="display: block; overflow: hidden; border: 0px none; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;" tabindex="-1"></iframe>
+                                    
+                                    <div id="top_x_div" >
+									
+									
+									
+									</div>
+                                </div>
+                            </div>
+                        </div><!-- /# column -->
+						
+					
+                        </div> <!-- end row -->
+						
+						<div class="row">
+
+                        <div class="col-lg-7">
+                            <div class="card">
+                                <div class="card-body"><iframe class="chartjs-hidden-iframe" style="display: block; overflow: hidden; border: 0px none; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;" tabindex="-1"></iframe>
+                                    
+                                    <div id="chart_div" >
+									
+									
+									
+									</div>
+                                </div>
+                            </div>
+                        </div><!-- /# column -->
+						
+							<div class="col-lg-5">
+                            <div class="card">
+                                <div class="card-body"><iframe class="chartjs-hidden-iframe" style="display: block; overflow: hidden; border: 0px none; margin: 0px; top: 0px; left: 0px; bottom: 0px; right: 0px; height: 100%; width: 100%; position: absolute; pointer-events: none; z-index: -1;" tabindex="-1"></iframe>
+                                    
+                                 <div id="piechart" style="width: 450px; height: 400px;"></div>
+
+									
+									
+									
+									</div>
+                                </div>
+                            </div>
+							
+						
+					</div>
+
+                  
+
+                 
+
+
+                </div>
+
+            </div><!-- .animated -->
+        </div>
+		<div> 
+
+
+  </body>
+
+{%include 'footer.html'%}
+
